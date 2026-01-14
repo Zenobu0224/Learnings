@@ -1,20 +1,10 @@
-from typing import TypedDict, List
+from typing import Union
 
-class Crush(TypedDict):
-    name : str
-    year : int
+def square(x: Union[int, float]) -> float:
+    return x * x
 
-crush_list : List[Crush] = []
+x = 5
 
+squared = square(x)
 
-for i in range(3):
-    name = input('Enter Crush Name : ')
-    year = int(input('Enter Year : '))
-    print()
-
-    new_crush = Crush(name=name, year=year)
-
-    crush_list.append(new_crush)
-
-
-print(crush_list)
+print(squared)

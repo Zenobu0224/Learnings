@@ -1,10 +1,9 @@
-from typing import Union
+from typing import Optional
 
-def square(x: Union[int, float]) -> float:
-    return x * x
+def message(msg : Optional[str]) -> None:
+    if msg is None:
+        print('Eden Pearl')
+    else:
+        print(f'{msg} <3')
 
-x = 5
-
-squared = square(x)
-
-print(squared)
+message(msg="Devine Lorraine mahal parin kita kahit maldita ka!!")

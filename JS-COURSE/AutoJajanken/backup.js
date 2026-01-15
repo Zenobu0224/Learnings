@@ -1,6 +1,7 @@
 const rockBtn = document.querySelector('.rock');
 const paperBtn = document.querySelector('.paper');
-const scissorBtn = document.querySelector('.scissor')
+const scissorBtn = document.querySelector('.scissor');
+const autoPlayBtn = document.querySelector('.autoPlayBtn');
 const resetScoreBtn = document.querySelector('.reset-score-btn');
 let result = '';
 let randomNumber = 0;
@@ -24,6 +25,25 @@ document.querySelector('.winners').innerHTML = `Wins : ${score.win}`;
 document.querySelector('.losses').innerHTML = `Losses : ${score.loss}`;
 document.querySelector('.ties').innerHTML = `Ties : ${score.tie}`;
 
+let isAutoPlaying = false;
+let intervalID;
+function autoPlay() {
+    
+    if(!isAutoPlaying) {
+        intervalID = setInterval(function() {
+            const gameMoves = ['Rock', 'Paper', 'Scissors'];
+            const randomIndex = Math.floor(Math.random() * gameMoves.length);
+            const bot1 = gameMoves[randomIndex];
+            const bot2 = pickComputerMove();
+            moveCha(bot2,bot1);
+        }, 3000);
+        isAutoPlaying = true;
+    } else {
+        clearInterval(intervalID);
+        isAutoPlaying = false;
+    }
+
+}
 
 function pickComputerMove() {
     let computerMove = '';
@@ -148,7 +168,6 @@ function moveCha(computerMove, yourMove) {
             document.querySelector('.ties').innerHTML = `Ties : ${score.tie}`;
         }
 
-        localStorage.setItem('score', JSON.stringify(score));
 
         console.log(score);
 
@@ -195,4 +214,10 @@ scissorBtn.addEventListener('click', function() {
     botMove = pickComputerMove();
 
     moveCha(botMove, 'Scissor');
+});
+
+autoPlayBtn.addEventListener('click', function() {
+
+    autoPlay();
+
 });

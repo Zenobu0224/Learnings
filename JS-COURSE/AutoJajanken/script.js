@@ -1,6 +1,7 @@
 const rockBtn = document.querySelector('.rock');
 const paperBtn = document.querySelector('.paper');
-const scissorBtn = document.querySelector('.scissor')
+const scissorBtn = document.querySelector('.scissor');
+const autoPlayBtn = document.querySelector('.autoPlayBtn');
 const resetScoreBtn = document.querySelector('.reset-score-btn');
 let result = '';
 let randomNumber = 0;
@@ -24,6 +25,25 @@ document.querySelector('.winners').innerHTML = `Wins : ${score.win}`;
 document.querySelector('.losses').innerHTML = `Losses : ${score.loss}`;
 document.querySelector('.ties').innerHTML = `Ties : ${score.tie}`;
 
+let isAutoPlaying = false;
+let intervalID;
+function autoPlay() {
+    
+    if(!isAutoPlaying) {
+        intervalID = setInterval(() => {
+            const gameMoves = ['Rock', 'Paper', 'Scissor'];
+            const randomIndex = Math.floor(Math.random() * gameMoves.length);
+            const bot1 = gameMoves[randomIndex];
+            const bot2 = pickComputerMove();
+            moveCha(bot2,bot1);
+        }, 3000);
+        isAutoPlaying = true;
+    } else {
+        clearInterval(intervalID);
+        isAutoPlaying = false;
+    }
+
+}
 
 function pickComputerMove() {
     let computerMove = '';
@@ -40,6 +60,18 @@ function pickComputerMove() {
     return computerMove;
 
 }
+
+document.body.addEventListener('keydown', (event) => {
+    const botMove = pickComputerMove();
+
+    if(event.key === 'r') {
+        moveCha(botMove, 'Rock');
+    } else if(event.key === 'p') {
+        moveCha(botMove, 'Paper');
+    } else if(event.key === 's') {
+        moveCha(botMove, 'Scissor');
+    }
+});
 
 function moveCha(computerMove, yourMove) {
 
@@ -76,12 +108,8 @@ function moveCha(computerMove, yourMove) {
 
         console.log(score);
 
-//         alert(`You pick ${yourMove}.
-// Computer pick ${botMove}.
-// ${result}.
-//             Win : ${score.win}        Loss : ${score.loss}        Tie : ${score.tie}`);
     } else if (yourMove === 'Paper') {
-        if (botMove === 'Rock') {
+        if (computerMove === 'Rock') {
             result = 'You Win';
             score.win++;
 
@@ -90,7 +118,7 @@ function moveCha(computerMove, yourMove) {
             // document.querySelector('.referee-opinion').innerHTML = `You  :  ${yourMove}  --  Opponent  :  ${computerMove}`;
 
             document.querySelector('.winners').innerHTML = `Wins : ${score.win}`;
-        } else if(botMove ==='Paper') {
+        } else if(computerMove ==='Paper') {
             result = 'Tie';
             score.tie++;
 
@@ -114,12 +142,8 @@ function moveCha(computerMove, yourMove) {
 
         console.log(score);
 
-//         alert(`You pick ${yourMove}.
-// Computer pick ${botMove}.
-// ${result}.
-//             Win : ${score.win}        Loss : ${score.loss}        Tie : ${score.tie}`)
-    } else if (yourMove === 'Scissor') {
-        if (botMove === 'Rock') {
+    } else{
+        if (computerMove === 'Rock') {
             result = 'You Lose';
             score.loss++;
 
@@ -128,7 +152,7 @@ function moveCha(computerMove, yourMove) {
             // document.querySelector('.referee-opinion').innerHTML = `You  :  ${yourMove}  --  Opponent  :  ${computerMove}`;
 
             document.querySelector('.losses').innerHTML = `Losses : ${score.loss}`;
-        } else if(botMove ==='Paper') {
+        } else if(computerMove ==='Paper') {
             result = 'You Win';
             score.win++;
 
@@ -148,16 +172,8 @@ function moveCha(computerMove, yourMove) {
             document.querySelector('.ties').innerHTML = `Ties : ${score.tie}`;
         }
 
-        localStorage.setItem('score', JSON.stringify(score));
-
         console.log(score);
 
-//         alert(`You pick ${yourMove}.
-// Computer pick ${botMove}.
-// ${result}.
-//             Win : ${score.win}        Loss : ${score.loss}        Tie : ${score.tie}`);
-    } else {
-        alert('Invalid Move');
     }
 
 }
@@ -195,4 +211,10 @@ scissorBtn.addEventListener('click', function() {
     botMove = pickComputerMove();
 
     moveCha(botMove, 'Scissor');
+});
+
+autoPlayBtn.addEventListener('click', function() {
+
+    autoPlay();
+
 });

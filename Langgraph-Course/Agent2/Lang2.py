@@ -8,7 +8,7 @@ class AgentState(TypedDict):
   operation : str
   result : str
 
-  def process_ans(state: AgentState) -> AgentState:
+def process_ans(state: AgentState) -> AgentState:
     """Handles the Logic & handles multiple inputs"""
 
     if state['operation'] == '+':
@@ -19,3 +19,13 @@ class AgentState(TypedDict):
         state['result'] = "\nInvalid Operator"
 
     return state
+
+
+graph = StateGraph(AgentState)
+
+graph.add_node('processing', process_ans)
+
+graph.set_entry_point('processing')
+graph.set_finish_point('processing')
+
+app = graph.compile()

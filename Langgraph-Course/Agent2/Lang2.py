@@ -29,3 +29,22 @@ graph.set_entry_point('processing')
 graph.set_finish_point('processing')
 
 app = graph.compile()
+
+
+num_list = []
+
+name = input("Enter Name : ")
+
+num_length = int(input("Enter length of list : "))
+
+for i in range(num_length):
+  num_val = int(input(f"Enter value {i+1} : "))
+
+  num_list.append(num_val)
+
+operator = input("Enter Operator : ")
+
+result = app.invoke({'nums' : num_list, 'name' : name, 'operation' : operator})
+
+print(result['result'])
+

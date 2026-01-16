@@ -43,3 +43,24 @@ graph.add_edge('second_node', 'third_node')
 graph.add_edge('third_node', END)
 
 app = graph.compile()
+
+
+skill_list = []
+
+name = input("Enter Name : ")
+age = input("Enter Age : ")
+
+num_of_skills = int(input("How many skills do you have? : "))
+
+for i in range(num_of_skills):
+  skill = input(f"Enter Skill {i+1} : ")
+  skill_list.append(skill)
+
+results = app.invoke({'name' : name,
+                      'age' : age,
+                      'skills' : skill_list})
+
+print('\n\nResults:\n')
+print(results['output'])
+
+print('\n', results)

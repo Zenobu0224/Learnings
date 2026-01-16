@@ -6,7 +6,7 @@ class AgentState(TypedDict):
   age : str
   skills : List[str]
   output : str
-  
+
 
 def node_one(state : AgentState) -> AgentState:
     """First node that process the name"""
@@ -30,3 +30,16 @@ def third_node(state: AgentState) -> AgentState:
     state['output'] = state['output'] + f'\nYou have skiils in: {', '.join(state['skills'])}'
 
     return state
+
+graph = StateGraph(AgentState)
+
+graph.add_node('first_node', node_one)
+graph.add_node('second_node', second_node)
+graph.add_node('third_node', third_node)
+
+graph.set_entry_point('first_node')
+graph.add_edge('first_node', 'second_node')
+graph.add_edge('second_node', 'third_node')
+graph.add_edge('third_node', END)
+
+app = graph.compile()

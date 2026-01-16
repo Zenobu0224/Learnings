@@ -48,3 +48,37 @@ def conditional_edge2(state: AgentState) -> AgentState:
         return "add_edge2"
     elif state["operation2"] == "-":
         return "sub_edge2"
+
+graph = StateGraph(AgentState)
+
+graph.add_node("add_node1", add_node1)
+graph.add_node("sub_node1", sub_node1)
+graph.add_node("router1", lambda state: state)
+
+graph.add_node("add_node2", add_node2)
+graph.add_node("sub_node2", sub_node2)
+graph.add_node("router2", lambda state: state)
+
+graph.add_edge(START, "router1")
+graph.add_conditional_edges(
+    "router1",
+    conditional_edge1,
+    {
+        "add_edge1" : "add_node1",
+        "sub_edge1" : "sub_node1"
+    }
+)
+graph.add_edge("add_node1", "router2")
+graph.add_edge("sub_node1", "router2")
+graph.add_conditional_edges(
+    "router2",
+    conditional_edge2,
+    {
+        "add_edge2" : "add_node2",
+        "sub_edge2" : "sub_node2"
+    }
+)
+graph.add_edge("add_node2", END)
+graph.add_edge("sub_node2", END)
+
+app = graph.compile()

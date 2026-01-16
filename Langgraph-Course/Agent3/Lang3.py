@@ -19,7 +19,7 @@ def node_one(state : AgentState) -> AgentState:
 def second_node(state: AgentState) -> AgentState:
     """Second node that process the age"""
 
-    state['output'] = state['output'] + f'\nYou are {state['age']} years old! '
+    state['output'] = state['output'] + f"\nYou are {state['age']} years old!"
 
     return state
 
@@ -27,7 +27,7 @@ def second_node(state: AgentState) -> AgentState:
 def third_node(state: AgentState) -> AgentState:
     """Third node that process the skills"""
 
-    state['output'] = state['output'] + f'\nYou have skiils in: {', '.join(state['skills'])}'
+    state['output'] = state['output'] + f"\nYou have skiils in: {', '.join(state['skills'])}"
 
     return state
 

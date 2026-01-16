@@ -82,3 +82,16 @@ graph.add_edge("add_node2", END)
 graph.add_edge("sub_node2", END)
 
 app = graph.compile()
+
+result = app.invoke({
+    "num1" : 10,
+    "operation1" : "-",
+    "num2" : 5,
+
+    "num3" : 7,
+    "operation2" : "+",
+    "num4" : 2
+})
+
+print(result['result1'])
+print(result['result2'])

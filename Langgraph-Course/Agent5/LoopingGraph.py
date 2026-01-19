@@ -24,3 +24,22 @@ def conditional_node(state: AgentState) -> AgentState:
         return "loop"
     else:
         return "exit"
+    
+graph = StateGraph(AgentState)
+
+graph.add_node('greeter_node', greeter_node)
+graph.add_node('random_node', random_node)
+
+graph.add_edge('greeter_node', 'random_node')
+graph.add_conditional_edges(
+    'random_node',
+    conditional_node,
+    {
+        "loop" : "random_node",
+        "exit" : END
+    }
+)
+
+graph.set_entry_point('greeter_node')
+
+app = graph.compile()

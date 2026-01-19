@@ -43,3 +43,11 @@ graph.add_conditional_edges(
 graph.set_entry_point('greeter_node')
 
 app = graph.compile()
+
+results = app.invoke({
+    "name" : "Charise Kimberly",
+    "nums" : [],
+    "counter" : -3
+})
+
+print(results)

@@ -91,3 +91,7 @@ graph.add_conditional_edges(
 graph.set_entry_point('set_up_node')
 
 app = graph.compile()
+
+result = app.invoke({'player_name' : 'Charise Kimberly'})
+
+print('\n', result['player_name'])

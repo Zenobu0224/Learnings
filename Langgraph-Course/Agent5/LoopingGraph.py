@@ -69,3 +69,25 @@ def conditional_edge(state: GameState) -> str:
 
   else:
     return "loop"
+
+
+graph = StateGraph(GameState)
+
+graph.add_node('set_up_node', set_node)
+graph.add_node('guess_node', guessing_game)
+graph.add_node('hint_node', check_guess)
+
+graph.add_edge('set_up_node', 'guess_node')
+graph.add_edge('guess_node', 'hint_node')
+graph.add_conditional_edges(
+    'hint_node',
+    conditional_edge,
+    {
+        'end' : END,
+        'loop' : 'guess_node'
+    }
+)
+
+graph.set_entry_point('set_up_node')
+
+app = graph.compile()

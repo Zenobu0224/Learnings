@@ -21,3 +21,12 @@ graph.add_node("process", process)
 
 graph.add_edge(START, "process")
 graph.add_edge("process", END)
+
+agent = graph.compile()
+
+# USER INPUT
+user_input = input("\nEnter Message : ")
+while user_input != "bye":
+    agent.invoke({"messages" : [HumanMessage(content=user_input)]})
+
+    user_input = input("\nEnter Message : ") 

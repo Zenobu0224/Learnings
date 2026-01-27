@@ -11,3 +11,11 @@ class AgentState(TypedDict):
 # LLM Model
 llm = ChatOllama(model="llama3.2:1b")
 
+
+def process(state: AgentState) -> AgentState:
+    response = llm.invoke(state['messages'])
+
+    state['messages'].append(BaseMessage(content=response.content))
+    print(f"AI : {response.content}\n")
+
+    return state

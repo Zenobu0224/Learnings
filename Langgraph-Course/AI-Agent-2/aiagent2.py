@@ -2,6 +2,7 @@ from  typing import TypedDict, List, Union
 from langchain_core.messages import HumanMessage, AIMessage, BaseMessage
 from langchain_ollama import ChatOllama
 from langgraph.graph import StateGraph, START, END
+import os
 
 
 class AgentState(TypedDict):
@@ -31,6 +32,14 @@ agent = graph.compile()
 
 # Array that store conversation with AI (for memory)
 conversation_history = []
+
+if os.path.exists("Langgraph-Course/AI-Agent-2/convo_history.txt"):
+    with open("Langgraph-Course/AI-Agent-2/convo_history.txt") as convo_db:
+        for msg in convo_db:
+            if msg.startswith("You") or msg.startswith("AI"):
+                conversation_history.append(msg)
+
+print(f"\n{conversation_history}\n")
 
 user_input = input("Enter Message : ")
 while user_input != "bye":

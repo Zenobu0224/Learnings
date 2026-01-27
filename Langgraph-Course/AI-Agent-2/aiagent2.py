@@ -41,3 +41,17 @@ while user_input != "bye":
     conversation_history = result["messages"]
 
     user_input = input("Enter Message : ")
+
+
+with open("Langgraph-Course/AI-Agent-2/convo_history.txt", "w") as db:
+    db.write("\nStart Conversation Logs:\n")
+
+    for msg in conversation_history:
+        if isinstance(msg, HumanMessage):
+            db.write(f"You : {msg.content}\n")
+        elif  isinstance(msg, AIMessage):
+            db.write(f"AI : {msg.content}\n\n")
+    
+    db.write("End Conversation Logs\n")
+
+print("\nSaved to convo_history.txt\n")

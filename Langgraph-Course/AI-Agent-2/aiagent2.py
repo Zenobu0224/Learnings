@@ -7,3 +7,7 @@ from langgraph.graph import StateGraph, START, END
 class AgentState(TypedDict):
     messages : List[Union[BaseMessage, AIMessage]]
 
+
+# LLM Model
+llm = ChatOllama(model="llama3.2:1b")
+

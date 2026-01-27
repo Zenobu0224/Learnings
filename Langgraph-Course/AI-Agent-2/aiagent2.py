@@ -19,3 +19,10 @@ def process(state: AgentState) -> AgentState:
     print(f"AI : {response.content}\n")
 
     return state
+
+
+# Graphing with langgraph
+graph = StateGraph(AgentState)
+graph.add_node("process", process)
+graph.add_edge(START, "process")
+graph.add_edge("process", END)

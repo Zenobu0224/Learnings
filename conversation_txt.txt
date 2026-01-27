@@ -1,0 +1,5 @@
+Start Conversation Log:
+You : my name is charles william
+AI : Charles William, that's a great name. What brings you here today? Are you looking for some advice, or just need to chat about something in particular?
+
+End of conversation

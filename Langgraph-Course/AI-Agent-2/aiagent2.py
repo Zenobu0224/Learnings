@@ -24,3 +24,15 @@ graph.add_edge(START, "process")
 graph.add_edge("process", END)
 
 agent = graph.compile()
+
+conversation_history = []
+
+user_input = input("Enter Message : ")
+while user_input != "bye":
+    conversation_history.append(HumanMessage(content=user_input))
+
+    result = agent.invoke({"messages" : conversation_history})
+
+    conversation_history = result["messages"]
+
+    user_input = input("Enter Message : ")

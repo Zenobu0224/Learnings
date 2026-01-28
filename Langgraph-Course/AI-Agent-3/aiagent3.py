@@ -18,3 +18,5 @@ def add(a : int, b: int):
     return a+b
 
 tools = [add]
+
+llm = ChatOllama(model="llama3.2:1b")

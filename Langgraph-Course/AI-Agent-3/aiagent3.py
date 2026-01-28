@@ -20,3 +20,13 @@ def add(a : int, b: int):
 tools = [add]
 
 llm = ChatOllama(model="llama3.2:1b")
+
+
+def model_call(state: AgentState) -> AgentState:
+    system_prompt = SystemMessage(
+        content = "You are a helpful assistant. Use tools for any math."
+    )
+
+    response = llm.invoke([system_prompt] + list(state['messages']))
+
+    return {"messages" : response}

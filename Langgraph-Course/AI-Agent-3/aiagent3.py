@@ -40,3 +40,24 @@ def should_continue(state: AgentState) -> str:
         return "end"
     else:
         return "use_tool"
+    
+
+graph = StateGraph(AgentState)
+graph.add_node("agent", model_call)
+
+tool_node = ToolNode(tools=tools)
+graph.add_node("tools", tool_node)
+
+graph.set_entry_point("agent")
+graph.add_conditional_edges(
+    "agent",
+    should_continue,
+    {
+        "end" : END,
+        "use_tool" : "tools"
+    }
+)
+
+graph.add_edge("tools", "agent")
+
+model = graph.compile()

@@ -2,13 +2,13 @@ from typing import Annotated, Sequence, TypedDict
 from langchain_core.messages import BaseMessage, ToolMessage, SystemMessage
 from langchain_ollama import ChatOllama
 from langchain_core.tools import tool
-from langgraph.graph.message import add_message
+from langgraph.graph.message import add_messages
 from langgraph.graph import StateGraph, END
 from langgraph.prebuilt import ToolNode
 
 
 class AgentState(TypedDict):
-    messages : Annotated[Sequence[BaseMessage], add_message]
+    messages : Annotated[Sequence[BaseMessage], add_messages]
 
 
 @tool
@@ -19,7 +19,7 @@ def add(a : int, b: int):
 
 tools = [add]
 
-llm = ChatOllama(model="llama3.2:1b")
+llm = ChatOllama(model="llama3.2:1b").bind_tools(tools)
 
 
 def model_call(state: AgentState) -> AgentState:
@@ -71,3 +71,6 @@ def print_stream(stream):
         else:
             msg.pretty_print()
 
+inputs = {"messages" : [("user", "Add 2 + 24")]}
+
+print_stream(model.stream(inputs, stream_mode="values"))

@@ -9,3 +9,12 @@ from langgraph.prebuilt import ToolNode
 
 class AgentState(TypedDict):
     messages : Annotated[Sequence[BaseMessage], add_message]
+
+
+@tool
+def add(a : int, b: int):
+    """This is an addition function that adds 2 numbers together"""
+
+    return a+b
+
+tools = [add]

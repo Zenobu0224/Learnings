@@ -61,3 +61,13 @@ graph.add_conditional_edges(
 graph.add_edge("tools", "agent")
 
 model = graph.compile()
+
+def print_stream(stream):
+    for s in stream:
+        msg = s['messages'][-1]
+
+        if isinstance(msg, tuple):
+            print(msg)
+        else:
+            msg.pretty_print()
+

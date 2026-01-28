@@ -30,3 +30,13 @@ def model_call(state: AgentState) -> AgentState:
     response = llm.invoke([system_prompt] + list(state['messages']))
 
     return {"messages" : response}
+
+
+def should_continue(state: AgentState) -> str:
+    messages = state['messages']
+    last_msg = messages[-1]
+
+    if not last_msg.tool_calls:
+        return "end"
+    else:
+        return "use_tool"

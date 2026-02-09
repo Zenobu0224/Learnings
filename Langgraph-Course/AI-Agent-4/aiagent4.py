@@ -4,6 +4,7 @@ from typing import Annotated, Sequence, TypedDict
 from langchain_core.tools import tool
 from langgraph.graph import StateGraph, END
 from langgraph.graph.message import add_messages
+from langgraph.prebuilt import ToolNode
 
 
 # This global variable will store document content
@@ -106,3 +107,22 @@ def print_msgs(msgs):
     for msg in msgs[-3:]:
         if isinstance(msg, ToolMessage):
             print(f"\nTool Result : {msg.content}")
+
+
+graph = StateGraph(AgentState)
+
+graph.add_node("agent", agent)
+graph.add_node("tool", ToolNode(tools=tools))
+
+graph.set_entry_point("agent")
+graph.add_edge("agent", "tool")
+graph.add_conditional_edges(
+    "tool",
+    should_continue,
+    {
+        "continue" : "agent",
+        "end" : END
+    }
+)
+
+agent = graph.compile()

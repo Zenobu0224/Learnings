@@ -96,3 +96,13 @@ def should_continue(state: AgentState) -> AgentState:
             return "end"
         
     return "continue"
+
+def print_msgs(msgs):
+    """Print message in a more readable format"""
+
+    if not msgs:
+        return
+    
+    for msg in msgs[-3:]:
+        if isinstance(msg, ToolMessage):
+            print(f"\nTool Result : {msg.content}")

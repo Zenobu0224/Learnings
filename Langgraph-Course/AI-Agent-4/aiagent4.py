@@ -11,7 +11,7 @@ document_content = ""
 
 class AgentState(TypedDict):
     messages : Annotated[Sequence[BaseMessage], add_messages]
-    
+
 
 @tool
 def update(content: str) -> str:
@@ -41,3 +41,7 @@ def save(filename: str) -> str:
         return f"Document has been saved successfully to {filename}."
     except Exception as e:
         return f"Error saving document {str(e)}"
+    
+tools = [update, save]
+    
+llm_model = ChatOllama(model="llama3.2:1b").bind_tools(tools)

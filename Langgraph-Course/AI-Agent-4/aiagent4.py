@@ -76,3 +76,23 @@ def agent(state: AgentState) -> AgentState:
         print(f"USING TOOLS : {[tc['name'] for tc in response.tool_calls]}")
 
     return {"messages" : list(state['messages']) +  [user_msg, response]}
+
+
+# conditional edge
+def should_continue(state: AgentState) -> AgentState:
+    """Determines if we should continue or end the conversation."""
+
+    msgs = state['messages']
+
+    # if the msgs are empty then continue
+    if not msgs:
+        return "continue"
+    
+    # return 'end' if the msg is a ToolMessage and it contains the words [saved, document]
+    for msg in  reversed(msgs):
+        if (isinstance(msg, ToolMessage) and
+            "saved" in msg.content.lower() and
+            "document" in msg.content.lower()):
+            return "end"
+        
+    return "continue"

@@ -45,3 +45,34 @@ def save(filename: str) -> str:
 tools = [update, save]
     
 llm_model = ChatOllama(model="llama3.2:1b").bind_tools(tools)
+
+def agent(state: AgentState) -> AgentState:
+    system_prompt = SystemMessage(
+        content = f"""
+    You are a Drafter, a helpful writing assistant. You are going to help the user update and modify documents.
+
+    - If the user wants to update or modify content, use the 'update' tool with the complete updated content.
+    - If the user wants to save and finish, you need to use the 'save' tool.
+    - Make sure to always show the current document state after modifications.
+
+    The current document content is : {document_content}
+"""
+    )
+
+    if not state['messages']:
+        user_input = "I'm ready to help you update a document. What would you like to create?"
+        user_msg = HumanMessage(content=user_input)
+    else:
+        user_input = input("\nWhat would you like to do with the documents? ")
+        print(f"\nUser : {user_input}")
+        user_msg = HumanMessage(content=user_msg)
+
+    zembu_msg = [system_prompt] + list(state['messages']) + [user_msg]
+
+    response = llm_model.invoke(zembu_msg)
+
+    print(f"\nAI : {response.content}")
+    if hasattr(response, "tool_calls") and response.tool_calls:
+        print(f"USING TOOLS : {[tc['name'] for tc in response.tool_calls]}")
+
+    return {"messages" : list(state['messages']) +  [user_msg, response]}

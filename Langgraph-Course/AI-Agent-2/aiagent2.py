@@ -16,6 +16,7 @@ def processing(state: AgentState) -> AgentState:
     response = llm.invoke(state["messages"])
 
     state["messages"].append(AIMessage(content=response.content))
+    print(f"AI : {response.content}")
 
     return state
 
@@ -25,3 +26,19 @@ graph.set_entry_point("model")
 graph.add_edge("model", END)
 
 agent = graph.compile()
+
+# stores conversation history (list)
+conversation_hist = []
+
+while True:
+    msg = input("\n\nYou : ")
+
+    if msg.lower() in ['bye', 'exit']:
+        print("\n\nSayonara~")
+        break
+
+    conversation_hist.append(HumanMessage(content=msg))
+
+    result = agent.invoke({"messages" : conversation_hist})
+
+    conversation_hist = result["messages"]

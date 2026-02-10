@@ -66,7 +66,7 @@ def agent(state: AgentState) -> AgentState:
     else:
         user_input = input("\nWhat would you like to do with the documents? ")
         print(f"\nUser : {user_input}")
-        user_msg = HumanMessage(content=user_msg)
+        user_msg = HumanMessage(content=user_input)
 
     zembu_msg = [system_prompt] + list(state['messages']) + [user_msg]
 
@@ -126,3 +126,19 @@ graph.add_conditional_edges(
 )
 
 agent = graph.compile()
+
+
+def run_document_agent():
+    print("\n" + "="*10 + "DRAFTER" + "="*10)
+
+    state = {"messages" : []}
+
+    for step in agent.stream(state, stream_mode="values"):
+        if "messages" in step:
+            print_msgs(step['messages'])
+
+    print("\n" + "="*10 + "DRAFTER FINISHED" + "="*10)
+
+
+if __name__ == "__main__":
+    run_document_agent()

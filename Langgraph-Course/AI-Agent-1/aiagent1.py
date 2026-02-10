@@ -6,7 +6,7 @@ from langgraph.graph import StateGraph, START,  END
 class AgentState(TypedDict):
     messages : List[BaseMessage]
 
-llm = ChatOllama(model="llama3.2:1b")
+llm = ChatOllama(model="qwen2.5:3b")
 
 def process(state: AgentState) -> AgentState:
     response = llm.invoke(state["messages"])

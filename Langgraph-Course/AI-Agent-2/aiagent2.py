@@ -52,7 +52,8 @@ while True:
 
     conversation_hist = result["messages"]
 
-with open("Langgraph-Course/AI-Agent-2/convo-history.txt") as txt_file:
+# open and append(if not exist yet) txt-file and store every elements in conversation_hist list
+with open("Langgraph-Course/AI-Agent-2/convo-history.txt", "a") as txt_file:
     for convo in  conversation_hist:
         if isinstance(convo, HumanMessage):
             txt_file.write(f"\n\n{convo}")

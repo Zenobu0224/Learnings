@@ -45,7 +45,7 @@ def save(filename: str) -> str:
     
 tools = [update, save]
     
-llm_model = ChatOllama(model="llama3.2:1b").bind_tools(tools)
+llm_model = ChatOllama(model="qwen2.5:3b").bind_tools(tools)
 
 def agent(state: AgentState) -> AgentState:
     system_prompt = SystemMessage(

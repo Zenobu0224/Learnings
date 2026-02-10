@@ -7,3 +7,6 @@ import os
 
 class AgentState(TypedDict):
     messages : List[BaseMessage]
+
+# LLM Model
+llm = ChatOllama(model="qwen2.5:3b")

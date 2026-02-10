@@ -51,3 +51,12 @@ while True:
     result = agent.invoke({"messages" : conversation_hist})
 
     conversation_hist = result["messages"]
+
+with open("Langgraph-Course/AI-Agent-2/convo-history.txt") as txt_file:
+    for convo in  conversation_hist:
+        if isinstance(convo, HumanMessage):
+            txt_file.write(f"\n\n{convo}")
+        elif isinstance(convo, AIMessage):
+            txt_file.write(convo)
+
+print("\nConversation saved in convo-history.txt")

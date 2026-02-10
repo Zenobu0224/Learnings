@@ -54,10 +54,11 @@ while True:
 
 # open and append(if not exist yet) txt-file and store every elements in conversation_hist list
 with open("Langgraph-Course/AI-Agent-2/convo-history.txt", "a") as txt_file:
+    
     for convo in  conversation_hist:
         if isinstance(convo, HumanMessage):
-            txt_file.write(f"\n\n{convo}")
+            txt_file.write(f"\n\nYou : {convo.content}")
         elif isinstance(convo, AIMessage):
-            txt_file.write(convo)
+            txt_file.write(f"\nAI : {convo.content}")
 
 print("\nConversation saved in convo-history.txt")

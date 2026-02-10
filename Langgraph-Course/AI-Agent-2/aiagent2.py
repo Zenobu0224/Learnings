@@ -10,3 +10,11 @@ class AgentState(TypedDict):
 
 # LLM Model
 llm = ChatOllama(model="qwen2.5:3b")
+
+def processing(state: AgentState) -> AgentState:
+    """Processing Node"""
+    response = llm.invoke(state["messages"])
+
+    state["messages"].append(AIMessage(content=response.content))
+
+    return state

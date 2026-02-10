@@ -30,11 +30,20 @@ agent = graph.compile()
 # stores conversation history (list)
 conversation_hist = []
 
+# checks if convo-db (txt-file) exists
+if os.path.exists("Langgraph-Course/AI-Agent-2/convo-history.txt"):
+
+    # opens convo-db (txt-file) and appends every convo(Human & AI) to the conversation_hist list
+    with open("Langgraph-Course/AI-Agent-2/convo-history.txt") as txt_file:
+        for convo in txt_file:
+            if convo.startswith("You") or convo.startswith("AI"):
+                conversation_hist.append(convo)
+
 while True:
     msg = input("\n\nYou : ")
 
     if msg.lower() in ['bye', 'exit']:
-        print("\n\nSayonara~")
+        print("\nAI : Sayonara~")
         break
 
     conversation_hist.append(HumanMessage(content=msg))

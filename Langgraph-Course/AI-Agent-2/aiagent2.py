@@ -18,3 +18,10 @@ def processing(state: AgentState) -> AgentState:
     state["messages"].append(AIMessage(content=response.content))
 
     return state
+
+graph = StateGraph(AgentState)
+graph.add_node("model", processing)
+graph.set_entry_point("model")
+graph.add_edge("model", END)
+
+agent = graph.compile()
